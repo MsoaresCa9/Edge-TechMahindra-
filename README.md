@@ -1,44 +1,75 @@
-# Edge-TechMahindra-
-# CP4-edge-Firewaal descomplicado 
-Integrantes: Caio Soares Rossini, Lucas Serrrano, Pedro Henrique Nobre e Thomaz
-RM: 555084, 557789,55170, 557454
-1ESPJ
-# FIWARE Descomplicado
+# Servidor de Captura e Análise de Sinais em Tempo Real
 
-Este repositório contém um projeto dedicado à instalação e verificação do FIWARE Descomplicado em ambientes Linux, bem como a realização de testes de health check nos componentes principais da plataforma.
+Integrantes: Caio Soares Rossini, Lucas Serrano, Pedro Henrique Nobre e Thomaz  
+RM: 555084, 557789, 55170, 557454  
+1ESPJ
+
+## Importância da Internet das Coisas (IoT) Atualmente
+
+A Internet das Coisas (IoT) desempenha um papel crucial no mundo moderno, conectando uma ampla gama de dispositivos e objetos do cotidiano à internet. Desde sensores em fábricas até dispositivos de monitoramento em lares, a IoT possibilita a coleta de dados em tempo real e a automação de processos. Essa tecnologia está revolucionando setores como saúde, transporte, agricultura e cidades inteligentes, permitindo uma análise mais eficaz e a tomada de decisões informadas. Ao integrar objetos comuns à rede, a IoT não apenas melhora a eficiência operacional, mas também transforma a experiência do usuário, oferecendo serviços personalizados e resposta imediata às necessidades.
 
 ## Índice
 
 - [Descrição do Projeto](#descrição-do-projeto)
-- [Instalação](#instalação)
-- [Health Check](#health-check)
+- [Instalação do MySQL](#instalação-do-mysql)
+- [Instalação do Servidor](#instalação)
+- [Verificação de Saúde (Health Check)](#verificação-de-saúde-health-check)
 - [Vídeo de Apresentação](#vídeo-de-apresentação)
 - [Licença](#licença)
 
 ## Descrição do Projeto
 
-O FIWARE Descomplicado é uma iniciativa para facilitar a instalação e o uso da plataforma FIWARE em máquinas Linux. O projeto aborda a instalação de componentes essenciais e a realização de verificações de saúde dos serviços.
+Este projeto consiste na implementação de um servidor que capta sinais recebidos em tempo real, com foco na análise de médias e na detecção de perdas de desempenho ao longo do tempo. Através da utilização de tecnologias avançadas, este sistema possibilita o monitoramento contínuo de dados, oferecendo insights valiosos sobre a performance de dispositivos conectados.
 
-## Instalação
+A arquitetura do servidor é projetada para ser escalável e robusta, garantindo a coleta eficiente de dados de múltiplas fontes simultaneamente. Além disso, as análises realizadas pelo servidor permitem a identificação de padrões de desempenho, ajudando na antecipação de falhas e na otimização de operações.
 
-Siga os passos abaixo para realizar a instalação do FIWARE Descomplicado em uma máquina Linux:
+## Instalação do MySQL
+
+Para instalar o MySQL no terminal do Linux, siga os passos abaixo:
+
+1. **Atualize o sistema:**
+   ```bash
+   sudo apt-get update
+   ```
+
+2. **Instale o MySQL Server:**
+   ```bash
+   sudo apt-get install mysql-server
+   ```
+
+3. **Inicie o serviço MySQL:**
+   ```bash
+   sudo service mysql start
+   ```
+
+4. **Segurança da instalação:**
+   Para melhorar a segurança da instalação do MySQL, execute:
+   ```bash
+   sudo mysql_secure_installation
+   ```
+
+5. **Acesse o MySQL:**
+   Você pode acessar o MySQL com o seguinte comando:
+   ```bash
+   sudo mysql -u root -p
+   ```
+
+## Instalação do Servidor
+
+Para instalar o servidor de captura e análise, siga os passos abaixo:
 
 1. **Pré-requisitos:**
-   - Certifique-se de que você possui um sistema Linux atualizado.
-   - Instale as dependências necessárias:
-     ```bash
-     sudo apt-get update
-     sudo apt-get install -y <dependências necessárias>
-     ```
+   - Um sistema Linux atualizado.
+   - Docker e Docker Compose instalados.
 
 2. **Clone o repositório:**
    ```bash
-   git clone https://github.com/seuusuario/fiware-descomplicado.git
-   cd fiware-descomplicado
+   git clone https://github.com/seuusuario/servidor-captura-sinais.git
+   cd servidor-captura-sinais
    ```
 
 3. **Configuração do ambiente:**
-   - Edite o arquivo de configuração conforme suas necessidades:
+   - Edite o arquivo de configuração para ajustar as preferências:
      ```bash
      nano config.env
      ```
@@ -53,36 +84,30 @@ Siga os passos abaixo para realizar a instalação do FIWARE Descomplicado em um
    docker ps
    ```
 
-## Health Check
+## Verificação de Saúde (Health Check)
 
-Para garantir que os componentes da plataforma estão funcionando corretamente, execute os métodos HTTP de health check dos seguintes serviços:
+Para garantir que os componentes do servidor estão funcionando corretamente, utilize os métodos HTTP de health check dos seguintes serviços:
 
-1. **Orion Context Broker:**
+1. **Serviço de Captura:**
    - Execute a requisição:
      ```bash
-     curl -i http://<endereço_do_orion>:1026/version
+     curl -i http://<endereço_do_serviço_captura>:<porta>/health
      ```
 
-2. **STH-Comet:**
+2. **Serviço de Análise:**
    - Execute a requisição:
      ```bash
-     curl -i http://<endereço_do_sth>:8668/version
+     curl -i http://<endereço_do_serviço_analise>:<porta>/health
      ```
 
-3. **IoT Agent MQTT:**
-   - Execute a requisição:
-     ```bash
-     curl -i http://<endereço_do_iot_agent>:4041/version
-     ```
-
-As requisições acima devem retornar o status 200 OK e as versões dos respectivos componentes. Para mais detalhes, consulte a coleção do Postman disponível no [GitHub da Plataforma FIWARE Descomplicado](https://github.com/fiware/fiware-desk).
+As requisições acima devem retornar o status 200 OK, indicando que os serviços estão operacionais.
 
 ## Vídeo de Apresentação
 
 Para uma apresentação detalhada do projeto, assista ao vídeo disponível no YouTube:  
-https://youtu.be/o24WOOdvXbY
-
+[Vídeo de Apresentação](https://youtu.be/M1-SzxVPeMs)
 
 ## Licença
 
-Este projeto está licenciado sob a MIT License. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+Este projeto está licenciado sob a MIT License. Consulte o arquivo [LICENSE](LICENSE) para mais detalhes.
+
